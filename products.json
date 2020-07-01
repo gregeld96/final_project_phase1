@@ -1,13 +1,13 @@
 [
     {
         "name": "Asus Zephyrus 65",
-        "type": "gaming",
+        "type": "laptop",
         "price": 50000000,
         "stock": 3
     },
     {
         "name": "Lenovo Idepad 98",
-        "type": "commercial",
+        "type": "laptop",
         "price": 7000000,
         "stock": 2
     }
