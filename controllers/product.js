@@ -5,7 +5,8 @@ class Controller {
     static read(req, res){
         Product.findAll({order: [["price", "DESC"]]})
             .then(data => {
-                const error = req.query.err;
+                const error = req.query.err || ""
+                delete req.query.err;
                 res.render('product', {data, error, priceSeparator});
             })
             .catch(err => {
@@ -15,6 +16,7 @@ class Controller {
 
     static add(req, res){
         const error = req.query.err;
+        delete req.query.err;
         res.render('addProduct', {error});
     }
 
@@ -50,6 +52,7 @@ class Controller {
         Product.findByPk(req.params.id)
             .then(data => {
                 const error = req.query.err;
+                delete req.query.err;
                 res.render('editProduct', {data, error});
             })
             .catch(err => {
