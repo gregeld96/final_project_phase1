@@ -5,10 +5,17 @@ const home = require('./routes/home');
 const product = require('./routes/product');
 const company = require('./routes/company');
 const prodcompany = require('./routes/prodcom');
+const session = require('express-session');
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(__dirname + '/public'));
+
+app.use(session({
+    secret: 'keyboard',
+    resave: false,
+    saveUninitialized: false
+}))
 
 app.use('/', home);
 app.use('/products', product)

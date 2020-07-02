@@ -1,41 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../index.css">
-    <title>Ecommerce Inventory</title>
-</head>
-<body>
-    
-    <div class="row" id="navbar">
-        <div class="col-6">
-            <form action="/company/filter" method="POST">
-                <input type="text" placeholder="Brand" name="brand">
-                <input type="submit" value="Find">
-            </form>
-        </div>
-        <div class="col-4">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </div>
-    </div>
+<%- include('partials/header', {title: ""}) %>
 
     <h1><%= data.name %></h1>
     
     <div class="row">
-        <% for(let i = 0; i < allCompany.length; i++) { %>
-            <% if (allCompany[i].id === data.ProductCompanies.companyId) { %>
+        <% for(let i = 0; i < data.ProductCompanies.length; i++) { %>
                 <div class="col-6 mt-4">
                     <p>Store</p><br>
-                    <p><%= allCompany[i].store.toUpperCase() %></p><br>
+                    <p><%= data.ProductCompanies[i].Company.store.toUpperCase() %></p><br>
                 </div>
                 <div class="col-6 mt-4">
                         <div class="mapouter">
                             <div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" 
-                                src="https://maps.google.com/maps?q=<%= urlFormat(allCompany[i].store) %>&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                                src="https://maps.google.com/maps?q=<%= urlFormat(data.ProductCompanies[i].Company.store) %>&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                                 frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.whatismyip-address.com/divi-discount/"></a>
                             </div>
                             <style>
@@ -43,7 +19,6 @@
                             </style>
                         </div>
                 </div>
-            <% } %>
         <% } %>
     </div>
 
@@ -51,12 +26,13 @@
           <tr>
               <th>Price</th>
               <th>Stock</th>
-              <th>Distributor</th>
+              <th>Type</th>
           </tr>
     
           <tr>
                 <td>Rp <%= priceSeparator(data.price) %></td>
                 <td><%= data.stock %></td>
+                <td><%= data.type %></td>
             </tr>
 
       </table>

@@ -12,7 +12,6 @@ class Controller {
                     include: ProductCompany
                  })
             }).then(data => {
-                //console.log(allCast);
                 const errors = req.query.err || '';
                 res.render('addProductCompany', { data, allProduct, priceSeparator, errors})
             }).catch(err => {
@@ -30,15 +29,10 @@ class Controller {
             .then(data => {
                 res.redirect(`/productcompanies/${req.params.id}/add`)
             }).catch(err => {
-                let errArr = [];
-                if(err.name === "SequelizeValidationError") {
-                    for(let i = 0; i < err.errors.length; i++) {
-                        errArr.push(err.errors[i].message)
-                    }
-                }
+                let error = ProductCompany.error(err)
 
-                if(errArr.length > 0) {
-                    res.redirect(`/productCompanies/${req.params.id}/add?err=${errArr}`)
+                if(error.length > 0) {
+                    res.redirect(`/productcompanies/${req.params.id}/add?err=${error}`)
                 } else {
                     res.send(err.message)
                 }
@@ -46,17 +40,15 @@ class Controller {
     }
 
     static detail (req, res) {
-        let allCompany = []
 
-        Company.findAll()
-            .then(company => {
-                allCompany = company;
-                return Product.findByPk(req.params.id, { 
-                    include: ProductCompany
-                })
-            }).then(data => {
-                console.log(urlFormat(allCompany[0].store))
-                res.render('detailProduct', { data, allCompany, priceSeparator, urlFormat })
+            Product.findByPk(req.params.id, { 
+                include: [
+                    {model: ProductCompany, include: Company}
+                ]
+            })
+            .then(data => {
+                // res.send(data)
+                res.render('detailProduct', { data, priceSeparator, urlFormat })
             }).catch(err => {
                 res.send(err.message)
             })

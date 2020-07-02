@@ -1,0 +1,17 @@
+<%- include('partials/header', {title: "Register Form"}) %>
+
+    <% if(error) { %>
+        <p><%= error %></p>
+    <% } %>
+    
+    <form action="/register" method="POST">
+        <label>Username</label><br>
+        <input type="text" name="username"><br><br>
+        <label>Password</label><br>
+        <input type="text" name="password"><br><br>
+        <label>Confirmation Password</label><br>
+        <input type="text" name="confirmation_password"><br><br>
+        <input type="submit" value="Register">
+    </form>
+
+<%- include('partials/footer') %>

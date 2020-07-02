@@ -1,7 +1,14 @@
 const route = require('express').Router();
 const controller = require('../controllers/product');
 
-route.get('', controller.read);
+route.get('', (req, res, next) => {
+    if(req.session.isLogin){
+        next();
+    } else {
+        const error = `Don't have the authority`
+        res.redirect(`/login?err=${error}`)
+    }
+},controller.read);
 route.get('/add', controller.add);
 route.get('/:id/edit', controller.edit);
 route.get('/:id/delete', controller.delete);
