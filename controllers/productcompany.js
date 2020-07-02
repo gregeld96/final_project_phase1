@@ -1,5 +1,6 @@
 const { ProductCompany, Company, Product } = require('../models');
 const priceSeparator = require('../helpers/priceSeperator');
+const urlFormat = require('../helpers/urlformat');
 
 class Controller {
     static add(req, res){
@@ -47,14 +48,15 @@ class Controller {
     static detail (req, res) {
         let allCompany = []
 
-        Product.findAll()
-            .then(movie => {
-                allMovies = movie;
-                return Cast.findByPk(req.params.id, { 
-                    include: MovieCast
+        Company.findAll()
+            .then(company => {
+                allCompany = company;
+                return Product.findByPk(req.params.id, { 
+                    include: ProductCompany
                 })
             }).then(data => {
-                res.render('movlist', { data, allMovies, ageCalculate })
+                console.log(urlFormat(allCompany[0].store))
+                res.render('detailProduct', { data, allCompany, priceSeparator, urlFormat })
             }).catch(err => {
                 res.send(err.message)
             })
