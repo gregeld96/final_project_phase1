@@ -6,5 +6,17 @@
     {
         "name": "lenovo",
         "store": "lenovo 1 shop"
+    },
+    {
+        "name": "popo",
+        "store": "giant ambasador"
+    },
+    {
+        "name": "enter komputer",
+        "store": "enter komputer"
+    },
+    {
+        "name": "all it store",
+        "store": "electronic city plaza kalibata"
     }
 ]

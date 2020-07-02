@@ -5,7 +5,9 @@
     <div class="row">
         <% for(let i = 0; i < data.ProductCompanies.length; i++) { %>
                 <div class="col-6 mt-4">
-                    <p>Store</p><br>
+                    <p>Company</p>
+                    <p><%= data.ProductCompanies[i].Company.name.toUpperCase() %></p><br>
+                    <p>Store</p>
                     <p><%= data.ProductCompanies[i].Company.store.toUpperCase() %></p><br>
                 </div>
                 <div class="col-6 mt-4">

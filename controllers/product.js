@@ -28,19 +28,24 @@ class Controller {
             stock: req.body.stock
         }
 
-        Product.create(newProduct)
-            .then(data => {
-                res.redirect('/products');
-            })
-            .catch(err => {
-                let error = Product.error(err)
-
-                if(error.length > 0){
-                    res.redirect(`/products/add?err=${error}`);
-                } else {
-                    res.send(err.message);
-                }
-            })
+        if(req.body.stock == 0){
+            const error = `Stock cannot be zero`
+            res.redirect(`/products/add?err=${error}`);
+        } else {
+            Product.create(newProduct)
+                .then(data => {
+                    res.redirect('/products');
+                })
+                .catch(err => {
+                    let error = Product.error(err)
+    
+                    if(error.length > 0){
+                        res.redirect(`/products/add?err=${error}`);
+                    } else {
+                        res.send(err.message);
+                    }
+                })
+        }
     }
 
     static edit(req, res){
