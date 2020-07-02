@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
 const home = require('./routes/home');
 const product = require('./routes/product');
 const company = require('./routes/company');
@@ -23,5 +23,5 @@ app.use('/companies', company)
 app.use('/productcompanies', prodcompany)
 
 app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
+    console.log(`Server starts on ${port}`)
 })
