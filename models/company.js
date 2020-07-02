@@ -12,6 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Company.hasMany(models.ProductCompany, {foreignKey: 'companyId'});
     }
+
+    static error (err){
+      let errArr = [];
+      if(err.name === "SequelizeValidationError") {
+        for(let i = 0; i < err.errors.length; i++){
+            errArr.push(err.errors[i].message);
+        }
+      }
+      return errArr;
+    }
+    
   };
   Company.init({
     name: {

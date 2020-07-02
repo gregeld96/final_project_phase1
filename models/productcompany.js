@@ -13,6 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       ProductCompany.belongsTo(models.Product, {foreignKey: 'productId'});
       ProductCompany.belongsTo(models.Company, {foreignKey: 'companyId'});
     }
+
+    static error (err){
+      let errArr = [];
+      if(err.name === "SequelizeValidationError") {
+        for(let i = 0; i < err.errors.length; i++){
+            errArr.push(err.errors[i].message);
+        }
+      }
+      return errArr;
+    }
+    
   };
   ProductCompany.init({
     productId: DataTypes.INTEGER,

@@ -33,15 +33,10 @@ class Controller {
                 res.redirect('/products');
             })
             .catch(err => {
-                let errArr = [];
-                if(err.name === "SequelizeValidationError") {
-                    for(let i = 0; i < err.errors.length; i++){
-                        errArr.push(err.errors[i].message);
-                    }
-                }
+                let error = Product.error(err)
 
-                if(errArr.length > 0){
-                    res.redirect(`/products/add?err=${errArr}`);
+                if(error.length > 0){
+                    res.redirect(`/products/add?err=${error}`);
                 } else {
                     res.send(err.message);
                 }
@@ -74,15 +69,10 @@ class Controller {
                 res.redirect('/products');
             })
             .catch(err => {
-                let errArr = [];
-                if(err.name === "SequelizeValidationError") {
-                    for(let i = 0; i < err.errors.length; i++){
-                        errArr.push(err.errors[i].message);
-                    }
-                }
+                let error = Product.error(err)
 
-                if(errArr.length > 0){
-                    res.redirect(`/products/${req.params.id}/edit?err=${errArr}`);
+                if(error.length > 0){
+                    res.redirect(`/products/${req.params.id}/edit?err=${error}`);
                 } else {
                     res.send(err.message);
                 }

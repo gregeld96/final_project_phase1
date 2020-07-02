@@ -13,6 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       Product.hasMany(models.ProductCompany, {foreignKey: 'productId'});
     }
     
+    static error (err){
+      let errArr = [];
+      if(err.name === "SequelizeValidationError") {
+        for(let i = 0; i < err.errors.length; i++){
+            errArr.push(err.errors[i].message);
+        }
+      }
+      return errArr;
+    }
+    
     fullname(){
       return `${this.type} ${this.name}`;
     }
