@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../index.css">
+    <title>Ecommerce Inventory</title>
+</head>
+<body>
+    
+    <div class="row" id="navbar">
+        <div class="col-6">
+            <form action="/subjects/filter" method="POST">
+                <input type="text" placeholder="company" name="company">
+                <input type="submit" value="Find">
+            </form>
+        </div>
+        <div class="col-4">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </div>
+
+    <h1>LIST OF PRODUCT</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        <% for (let i = 0; i < data.length; i++){ %>
+        <tr>
+            <td><%= data[i].name %></td>
+            <td><%= data[i].price %></td>
+            <td><a href="/productcompanies/<%= data[i].id %>/detail">Know More</a></td>
+        </tr>
+        <% } %>
+    </table>
+    
+<%- include('partials/footer');%>

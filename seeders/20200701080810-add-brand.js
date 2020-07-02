@@ -10,10 +10,10 @@ module.exports = {
       brandList[i].updatedAt = new Date();
     }
     
-    return queryInterface.bulkInsert('Brands', brandList, {});
+    return queryInterface.bulkInsert('Companies', brandList, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Brands', null, {});
+    return queryInterface.bulkDelete('Companies', null, {});
   }
 };

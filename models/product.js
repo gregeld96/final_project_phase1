@@ -10,17 +10,69 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Product.hasMany(models.ProductBrand, {foreignKey: 'productId'});
+      Product.hasMany(models.ProductCompany, {foreignKey: 'productId'});
+    }
+    
+    fullname(){
+      return `${this.type} ${this.name}`;
     }
   };
   Product.init({
-    name: DataTypes.STRING,
-    type: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `name cannot be empty`
+        }
+      }
+    },
+    type: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `type cannot be empty`
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: {
+          msg: `price must in number`
+        },
+        notEmpty: {
+          msg: `price cannot be empty`
+        }
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: `stock must in rounded number`
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Product',
+    hooks: {
+      beforeValidate: (data, option) => {
+        let name = data.name;
+        console.log(name);
+        let newFormated = '';
+        for(let i = 0; i < name.length; i++){
+          if(i === 0){
+            newFormated += name[i].toUpperCase();
+          } else if (name[i-1] === " "){
+            newFormated += name[i].toUpperCase();
+          } else {
+            newFormated += name[i];
+          }
+        }
+        data.name = newFormated;
+      }
+    }
   });
   return Product;
 };
