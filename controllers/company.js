@@ -1,13 +1,12 @@
-const { Product } = require('../models');
-const priceSeparator = require('../helpers/priceSeperator');
+const { Company } = require('../models');
 
 class Controller {
     static read(req, res){
-        Product.findAll({order: [["price", "DESC"]]})
+        Company.findAll()
             .then(data => {
-                const error = req.query.err || ""
+                const error = req.query.err;
                 delete req.query.err;
-                res.render('product', {data, error, priceSeparator});
+                res.render('company', {data, error});
             })
             .catch(err => {
                 res.send(err.message);
@@ -17,20 +16,18 @@ class Controller {
     static add(req, res){
         const error = req.query.err;
         delete req.query.err;
-        res.render('addProduct', {error});
+        res.render('addCompany', {error});
     }
 
     static addPost(req, res){
-        const newProduct = {
+        const newCompany = {
             name: req.body.name,
-            type: req.body.type,
-            price: req.body.price,
-            stock: req.body.stock
+            store: req.body.store
         }
 
-        Product.create(newProduct)
+        Company.create(newCompany)
             .then(data => {
-                res.redirect('/products');
+                res.redirect('/companies');
             })
             .catch(err => {
                 let errArr = [];
@@ -41,7 +38,7 @@ class Controller {
                 }
 
                 if(errArr.length > 0){
-                    res.redirect(`/products/add?err=${errArr}`);
+                    res.redirect(`/companiess/add?err=${errArr}`);
                 } else {
                     res.send(err.message);
                 }
@@ -49,11 +46,11 @@ class Controller {
     }
 
     static edit(req, res){
-        Product.findByPk(req.params.id)
+        Company.findByPk(req.params.id)
             .then(data => {
                 const error = req.query.err;
                 delete req.query.err;
-                res.render('editProduct', {data, error});
+                res.render('editCompany', {data, error});
             })
             .catch(err => {
                 res.send(err.message);
@@ -62,16 +59,14 @@ class Controller {
     }
 
     static editPost(req, res){
-        const editProduct = {
+        const editCompany = {
             name: req.body.name,
-            type: req.body.type,
-            price: req.body.price,
-            stock: req.body.stock
+            store: req.body.store
         }
 
-        Product.update(editProduct, {where: {id: req.params.id}})
+        Company.update(editCompany, {where: {id: req.params.id}})
             .then(data => {
-                res.redirect('/products');
+                res.redirect('/companies');
             })
             .catch(err => {
                 let errArr = [];
@@ -82,7 +77,7 @@ class Controller {
                 }
 
                 if(errArr.length > 0){
-                    res.redirect(`/products/${req.params.id}/edit?err=${errArr}`);
+                    res.redirect(`/companies/${req.params.id}/edit?err=${errArr}`);
                 } else {
                     res.send(err.message);
                 }
@@ -90,18 +85,9 @@ class Controller {
     }
 
     static delete(req, res){
-        Product.findByPk(req.params.id)
+        Company.destroy({where: {id: req.params.id}})
             .then(data => {
-                if(data.stock === 0){
-                    return Product.destroy({where: {id: data.id}})
-                } else {
-                    const error = `stock still more than 0`
-                    res.redirect(`/products?err=${error}`);
-                }
-            })
-        // Product.destroy({where: {id: req.params.id}})
-            .then(data => {
-                res.redirect('/products')
+                res.redirect('/companies')
             })
             .catch(err => {
                 res.send(err.message);
