@@ -1,26 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../index.css">
-    <title>Ecommerce Inventory</title>
-</head>
-<body>
-    
-    <div class="row" id="navbar">
-        <div class="col-6">
-            <div class="col-6">
-                <a href="/">Home</a>
-            </div>
-        </div>
-        <div class="col-4">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </div>
-    </div>
+<%- include('partials/header', {title: ""}) %>
 
     <h1><%= data.name %></h1>
     
@@ -48,12 +26,13 @@
           <tr>
               <th>Price</th>
               <th>Stock</th>
-              <th>Distributor</th>
+              <th>Type</th>
           </tr>
     
           <tr>
                 <td>Rp <%= priceSeparator(data.price) %></td>
                 <td><%= data.stock %></td>
+                <td><%= data.type %></td>
             </tr>
 
       </table>
